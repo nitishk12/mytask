@@ -2,7 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { removeUser } from '../actions/user';
-import UserForm from './UserForm';
 
 const UserList = (props) => {
     const handleRemove = (id) => {

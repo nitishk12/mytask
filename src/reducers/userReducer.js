@@ -5,7 +5,7 @@ const contactReducer = (state = contactInitialState, action) => {
             return [...state, action.payload]
         }
         case 'REMOVE_USER': {
-            return state.filter(user => user.id != action.payload)
+            return state.filter(user => user.id !== action.payload)
         }
         default: {
             return [...state]
