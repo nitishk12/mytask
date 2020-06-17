@@ -12,6 +12,7 @@ const UserForm = (props) => {
     const [skillslist, setSkillsList] = useState({});
     const [gender, setGender] = useState('');
     const [errors, setErrors] = useState({});
+    const [selected, setSelected] = useState(false);
 
     const hobbies = [
         { name: 'coding', key: '1', label: 'coding' },
@@ -44,7 +45,8 @@ const UserForm = (props) => {
                 portfolio: portfolio,
                 gender: gender,
                 hobbieslist: hobbieslist,
-                skillslist: skillslist
+                skillslist: skillslist,
+                selected: selected
             }
             console.log(formData)
             props.dispatch(addUser(formData))
@@ -80,6 +82,11 @@ const UserForm = (props) => {
             formIsValid = false;
             errors["portfolioErr"] = "Portfolio is required"
         }
+        else if (!portfolio.match(/(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g)) {
+            formIsValid = false;
+            errors["portfolioErr"] = "Invalid link format"
+        }
+
         if (gender === '' || gender === "radio") {
             formIsValid = false;
             errors["genderErr"] = "select a gender.";

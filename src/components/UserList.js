@@ -1,14 +1,19 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { removeUser } from '../actions/user';
+import { removeUser, markSelected } from '../actions/user';
+import Checkbox from './Checkbox';
 
 const UserList = (props) => {
-    const handleRemove = (id) => {
+    // console.log(props.users)
+    const handleRemove = (selected) => {
         const remove = window.confirm('Are you sure to delete ?')
         if (remove) {
-            props.dispatch(removeUser(id))
+            props.dispatch(removeUser(selected))
         }
+    }
+    const handleClick = (id) => {
+        props.dispatch(markSelected(id))
     }
     return (
         <div>
@@ -16,9 +21,12 @@ const UserList = (props) => {
             <ul>
                 {props.users.map(user => {
                     return <li key={user.id}>&nbsp;&nbsp;
-                    {user.name}&nbsp;&nbsp;
-                <Link to={`/users/${user.id}`}><button>View</button></Link>&nbsp;&nbsp;
-                    <button onClick={() => handleRemove(user.id)}>remove</button>
+                        <Checkbox name={user.name} checked={user.selected} onChange={() => {
+                            handleClick(user.id)
+                        }} />
+                        {user.name}&nbsp;&nbsp;
+                        <Link to={`/users/${user.id}`}><button>View</button></Link>&nbsp;&nbsp;
+                        <button onClick={() => handleRemove(user.selected)}>remove</button>
                     </li>
                 })}
             </ul>
